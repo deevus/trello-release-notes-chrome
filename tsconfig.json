@@ -9,12 +9,15 @@
         "sourceMap": true,
         "typeRoots": [
             "typings",
+            "typings/modules",
+            "typings/globals",
             "node_modules/@types"
         ],
         // fixes an issue with ts-loader
         // https://github.com/TypeStrong/ts-loader/issues/243
         "types": [
-            "node"
+            "node",
+            "chrome"
         ],
         "moduleResolution": "node",
         "experimentalDecorators": true,

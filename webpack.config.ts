@@ -3,25 +3,45 @@ import * as path from "path";
 import merge = require("webpack-merge");
 import validate = require("webpack-validator");
 import failPlugin = require("webpack-fail-plugin");
+import HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean2-webpack-plugin");
 
 const common: Webpack.Configuration & any = {
-    entry: [
-        path.join(__dirname, "src", "app")
-    ],
+    entry: {
+        "popup": path.join(__dirname, "src", "popup")
+    },
     output: {
-        filename: path.join(__dirname, "bin", "[name].js")
+        path: path.join(__dirname, "public"),
+        filename: "[name].js"
     },
     module: {
         loaders: [
             {test: /\.tsx?$/, loader: "ts-loader"},
             {test: /\.jsx?$/, loader: "babel-loader", exclude: "node_modules"},
-        ]
+            {test: /\.coffee$/, loader: "coffee", exclude: "node_modules"},
+            {test: /\.json$/, loader: "json"},
+        ],
     },
     resolve: {
-        extensions: ["", ".webpack.js", ".ts", ".tsx", ".js", ".jsx"]
+        extensions: ["", ".webpack.js", ".ts", ".tsx", ".js", ".jsx"],
+        alias: {
+            "trello": path.join(__dirname, "vendor", "trello", "client.coffee")
+        }
     },
     plugins: [
-        failPlugin
+        failPlugin,
+        new HtmlWebpackPlugin({
+            filename: "popup.html",
+            chunks: ["popup"]
+        }),
+        new CleanWebpackPlugin(["public"], path.resolve(__dirname)),
+        new Webpack.DefinePlugin({
+            API_KEY: JSON.stringify(process.env.npm_package_config_apiKey)
+        }),
+        new Webpack.ProvidePlugin({
+            "jQuery": "jquery",
+            $: "jquery"
+        })
     ]
 };
 

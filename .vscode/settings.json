@@ -1,5 +1,15 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "typescript.tsdk": "node_modules/typescript/lib",
-    "tslint.enable": true
+    "tslint.enable": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/*.js": true,
+        "**/*.jsx": true,
+        "**/*.js.map": true,
+        "**/*.jsx.map": true
+    }
 }

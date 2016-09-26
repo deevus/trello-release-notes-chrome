@@ -2,3 +2,7 @@ node_modules/
 *.js
 *.js.map
 bin/
+public/
+typings/index.d.ts
+typings/globals/
+typings/modules/
